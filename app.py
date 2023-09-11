@@ -59,6 +59,7 @@ def get_user(user_id):
         State=cursor.execute('UPDATE users SET name = ? WHERE name = ?', (name, user_id))
         if State:
             return 'Update success'
+            
         else:
             return 'Update failed'
         connect.commit()
