@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from database import connect
+import sqlite3
 app = Flask(__name__)
-
+cursor = connect.cursor()
 #Create a route to display Hello World
 @app.route('/')
 def hello_world():
@@ -22,13 +23,13 @@ def add_user():
     if request.method == 'POST':
         name = request.form['name']
 
-        cursor = connect.cursor()
+        #cursor = connect.cursor()
         #insert a new user
-        cursor.execute('INSERT INTO users VALUES (?)', (name,))
+        cursor.execute('INSERT INTO apiusers (name)  VALUES (?)', (name,))
         #commit the changes
         connect.commit()
         #close the connection
-        connect.close()
+        #connect.close()
         return 'success'
     else:
         return 'Invalid request method'
@@ -41,39 +42,38 @@ def get_user(user_id):
     
     if request.method == 'GET':
         #create a cursor to execute SQL commands
-        cursor = connect.cursor()
+        #cursor = connect.cursor()
         #select all users
-        cursor.execute('SELECT * FROM users WHERE name = ?', (user_id,))
+        cursor.execute('SELECT * FROM apiusers WHERE name = ?', (user_id,))
         #fetch all the users
         users = cursor.fetchall()
         if users:
             return users
         else:
             return 'User not found'
-        #close the connection
-        connect.close()
+     
     elif request.method == 'PATCH':
         #name = request.form['name']
         #create a cursor to execute SQL commands
-        cursor = connect.cursor()
-        State=cursor.execute('UPDATE users SET name = ? WHERE name = ?', (name, user_id))
+        #cursor = connect.cursor()
+        State=cursor.execute('UPDATE apiusers SET name = ? WHERE name = ?', (name, user_id))
         if State:
             return 'Update success'
             
         else:
             return 'Update failed'
         connect.commit()
-        connect.close()
+        #connect.close()
     elif request.method == 'DELETE':
         #create a cursor to execute SQL commands
-        cursor = connect.cursor()
-        State=cursor.execute('DELETE FROM users WHERE name = ?', (user_id,))
+        #cursor = connect.cursor()
+        State=cursor.execute('DELETE FROM apiusers WHERE name = ?', (user_id,))
         if State:
             return 'Delete success'
         else:
             return 'Delete failed'
         connect.commit()
-        connect.close()
+        #connect.close()
     else:
         return 'Invalid request method'
         
@@ -81,12 +81,17 @@ def get_user(user_id):
 #view all users
 @app.route('/api/users', methods=['GET'])
 def all_users():
-    cursor = connect.cursor()
+    
     #select all users
-    cursor.execute('SELECT * FROM users')
+    cursor.execute('SELECT * FROM apiusers')
     #fetch all the users
     users = cursor.fetchall()
+    #connect.close()
     return jsonify(users)
 
+
+
+#Do not close the connection!!!
+#connect.close()
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
