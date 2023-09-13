@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from database import connect
-import sqlite
+import sqlite3
 app = Flask(__name__)
 cursor = connect.cursor()
 #Create a route to display Hello World
