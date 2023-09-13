@@ -11,7 +11,7 @@ Endpoints
 
 NB: The ID of the user is Automatically generated and incremented by the database.
 
-* Create a New user
+1. Create a New user
 - Endpoint: POST /api
 
 
@@ -25,7 +25,7 @@ json
 }
 
 
-* Retrieve User Details
+2. Retrieve User Details
 - Endpoint: GET /api/<user_id>
 
 Response:
@@ -38,7 +38,7 @@ json
 }
 
 
-* Update User Details
+3.  Update User Details
 - Endpoint: PUT /api/<user_id>
 
 + Request:
@@ -51,7 +51,7 @@ json
 }
 
 
-* Delete a User
+4. Delete a User
 - Endpoint: DELETE /api/<user_id>
 
 + Response:
@@ -63,7 +63,7 @@ json
 
 
 
-* Create a New User
+5. Create a New User
 
 - Request:
     http
@@ -79,7 +79,7 @@ json
 
 
 
-* Retrieve user Details
+6. Retrieve user Details
 
 - Request:
 - GET /api/2
