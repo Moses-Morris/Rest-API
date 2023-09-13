@@ -62,6 +62,7 @@ json
 }
 
 <br>
+<hr>
 
 5. Create a New User
 
