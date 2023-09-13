@@ -45,19 +45,19 @@ def add_user():
                 return 'User add failed'
         except Exception as e:
             return ("Error:", e)
-    elif request.method == 'GET':
+    #elif request.method == 'GET':
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
         #select all users
-        cursor.execute('SELECT * FROM apiusersinfo')
+        #cursor.execute('SELECT * FROM apiusersinfo')
         #fetch all the users
-        users = cursor.fetchall()
-        if users:
-            return jsonify(users)
-        else:
-            return 'No users found'
-    else:
-        return 'Invalid request method'
+        #users = cursor.fetchall()
+        #if users:
+           # return jsonify(users)
+        #else:
+           # return 'No users found'
+    #else:
+        #return 'Invalid request method'
 
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
