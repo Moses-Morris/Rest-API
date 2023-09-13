@@ -57,8 +57,8 @@ def add_user():
            # return jsonify(users)
         #else:
            # return 'No users found'
-    #else:
-        #return 'Invalid request method'
+    else:
+        return 'Invalid request method'
 
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
