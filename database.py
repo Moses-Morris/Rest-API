@@ -1,7 +1,7 @@
-import sqlite
+import sqlite3
 
 #Create a database in RAM and Connect
-connect = sqlite.connect('apiuserdatabase.db', check_same_thread=False)
+connect = sqlite3.connect('apiuserdatabase.db', check_same_thread=False)
 if connect:
     print("Creating the DB Connection Successful!")
 else:
