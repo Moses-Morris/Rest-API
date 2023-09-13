@@ -22,15 +22,25 @@ def add_user():
     #create a cursor to execute SQL commands
     if request.method == 'POST':
         name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
 
         #cursor = connect.cursor()
         #insert a new user
-        cursor.execute('INSERT INTO apiusers (name)  VALUES (?)', (name,))
-        #commit the changes
-        connect.commit()
-        #close the connection
-        #connect.close()
-        return 'success'
+        try:
+            execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
+            # Commit the transaction if needed
+            # connection.commit()
+            if execute:
+                connect.commit()
+                #close the connection
+                #connect.close()
+                return 'Success : User added successfully'
+            else:
+                return 'User add failed'
+        except Exception as e:
+            return ("Error:", e)
+        
     else:
         return 'Invalid request method'
     
@@ -44,7 +54,7 @@ def get_user(user_id):
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
         #select all users
-        cursor.execute('SELECT * FROM apiusers WHERE name = ?', (user_id,))
+        cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (user_id,))
         #fetch all the users
         users = cursor.fetchall()
         if users:
@@ -67,7 +77,7 @@ def get_user(user_id):
     elif request.method == 'DELETE':
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
-        State=cursor.execute('DELETE FROM apiusers WHERE name = ?', (user_id,))
+        State=cursor.execute('DELETE FROM apiusersinfo WHERE name = ?', (user_id,))
         if State:
             return 'Delete success'
         else:
@@ -83,7 +93,7 @@ def get_user(user_id):
 def all_users():
     
     #select all users
-    cursor.execute('SELECT * FROM apiusers')
+    cursor.execute('SELECT * FROM apiusersinfo')
     #fetch all the users
     users = cursor.fetchall()
     #connect.close()
