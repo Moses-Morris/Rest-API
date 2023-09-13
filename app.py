@@ -65,7 +65,7 @@ def get_user(user_id):
     #create a cursor to execute SQL commands
     #cursor = connect.cursor()
     #select all users
-    cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (user_id,))
+    cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?   OR  id = ? OR email = ?', (user_id, user_id, user_id))
     #fetch all the users
     user = cursor.fetchall()
     if user:
@@ -78,26 +78,27 @@ def get_user(user_id):
 @app.route('/api/<user_id>', methods=['PATCH','PUT'])
 def update_user(user_id):
     name= "Piece of Crap"
-    State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ?', (name, user_id))
+    State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ? OR id =?', (name, user_id, user_id))
     if State:
+        connect.commit()  
         return 'Update success'
-        
     else:
         return 'Update failed'
-    connect.commit()
+    
 
 
 #create a route to delete a user and their information
 @app.route('/api/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     #create a cursor to execute SQL commands
-    #cursor = connect.cursor()
-    State=cursor.execute('DELETE  FROM apiusersinfo WHERE name = ?', (user_id,))
+    #cursor = connect.cursor()#
+    State=cursor.execute('DELETE  FROM apiusersinfo WHERE name = ? OR id = ?', (user_id,user_id))
     if State:
+        connect.commit()
         return 'Delete success'
     else:
         return 'Delete failed'
-    connect.commit()
+    
 
 
 
