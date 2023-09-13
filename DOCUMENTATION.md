@@ -46,7 +46,7 @@ json
 3.  Update User Details
 - Endpoint: PUT /api/<user_id>
 
-+ Request:
++ Response:
 json
 {
     6,
