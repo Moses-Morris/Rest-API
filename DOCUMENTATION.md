@@ -1,16 +1,19 @@
 API Documentation
 This document provides detailed information on how to use the User API, which allows you to perform CRUD operations on a "user" resource.
-
-Table of Contents
-Endpoints
+<br>
+<hr>
+Table of Contents:
+Endpoints:
 - Create a New Person
 - Retrieve Person Details
 - Update Person Details
 - Delete a Person
-
+<br>
+<hr>
 
 NB: The ID of the user is Automatically generated and incremented by the database.
-
+<br>
+<hr>
 1. Create a New user
 - Endpoint: POST /api
 
@@ -24,7 +27,8 @@ json
     "qwertyuiop"
 }
 
-
+<br>
+<hr>
 2. Retrieve User Details
 - Endpoint: GET /api/<user_id>
 
@@ -37,7 +41,8 @@ json
     "qwertyuiop"
 }
 
-
+<br>
+<hr>
 3.  Update User Details
 - Endpoint: PUT /api/<user_id>
 
@@ -50,7 +55,8 @@ json
     "qwertyuiop"
 }
 
-
+<br>
+<hr>
 4. Delete a User
 - Endpoint: DELETE /api/<user_id>
 
@@ -78,7 +84,8 @@ json
     "qwertyuiop"
 }
 
-
+<br>
+<hr>
 
 6. Retrieve user Details
 
@@ -97,10 +104,13 @@ json
 
 
 
-
-Known Limitations
+<br>
+<hr>
+Known Limitations:
 The API currently does not support pagination for large datasets.
 
+<br>
+<hr>
 Setup Instructions
 
 1. Clone the repository from GitHub: git clone https://github.com/Moses-Morris/Rest-API.git
