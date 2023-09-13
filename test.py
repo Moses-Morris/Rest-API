@@ -9,6 +9,7 @@ def hello_world():
     return 'Hello, World!'
 
 
+
 #Create a form to add new users
 @app.route('/api/form', methods=['GET', 'POST'])
 def form():
@@ -23,12 +24,6 @@ def add_user():
         name = request.form['name']
         email = request.form['email']
         password = request.form['password']
-        if name == "" or email == "" or password == "":
-            return 'Cannot add user with empty fields'
-        if len(password) < 8:
-            return 'Password must be at least 8 characters'
-        if type(name) != str or type(email) != str:
-            return 'Invalid data type Values must be strings'
 
         #cursor = connect.cursor()
         #insert a new user
@@ -45,60 +40,66 @@ def add_user():
                 return 'User add failed'
         except Exception as e:
             return ("Error:", e)
-    elif request.method == 'GET':
+        
+    else:
+        return 'Invalid request method'
+    
+
+#create a route to view all users
+@app.route('/api/<user_id>', methods=['GET', 'DELETE', 'PUT', 'PATCH'])
+def get_user(user_id):
+    
+    
+    if request.method == 'GET':
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
         #select all users
-        cursor.execute('SELECT * FROM apiusersinfo')
+        cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (user_id,))
         #fetch all the users
         users = cursor.fetchall()
         if users:
-            return jsonify(users)
+            return users
         else:
-            return 'No users found'
+            return 'User not found'
+     
+    elif request.method == 'PATCH':
+        #name = request.form['name']
+        #create a cursor to execute SQL commands
+        #cursor = connect.cursor()
+        State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ?', (name, user_id))
+        if State:
+            return 'Update success'
+            
+        else:
+            return 'Update failed'
+        connect.commit()
+        #connect.close()
+
+        
+    elif request.method == 'DELETE':
+        #create a cursor to execute SQL commands
+        #cursor = connect.cursor()
+        State=cursor.execute('DELETE FROM apiusersinfo WHERE name = ?', (user_id,))
+        if State:
+            return 'Delete success'
+        else:
+            return 'Delete failed'
+        connect.commit()
+        #connect.close()
     else:
         return 'Invalid request method'
-
-#create a route to view a user and their information
-@app.route('/api/<user_id>', methods=['GET'])
-def get_user(user_id):
-    #create a cursor to execute SQL commands
-    #cursor = connect.cursor()
-    #select all users
-    cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (user_id,))
-    #fetch all the users
-    user = cursor.fetchall()
-    if user:
-        return jsonify(user)
-    else:
-        return 'User not found'
-    
-
-#create a route to |Update a user and their information
-@app.route('/api/<user_id>', methods=['PATCH','PUT'])
-def update_user(user_id):
-    name= "Piece of Crap"
-    State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ?', (name, user_id))
-    if State:
-        return 'Update success'
         
-    else:
-        return 'Update failed'
-    connect.commit()
 
-
-#create a route to delete a user and their information
-@app.route('/api/<user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    #create a cursor to execute SQL commands
-    #cursor = connect.cursor()
-    State=cursor.execute('DELETE  FROM apiusersinfo WHERE name = ?', (user_id,))
-    if State:
-        return 'Delete success'
-    else:
-        return 'Delete failed'
-    connect.commit()
-
+#view all users
+@app.route('/api/users', methods=['GET'])
+def all_users():
+    
+    #select all users
+    cursor.execute('SELECT * FROM apiusersinfo')
+    #fetch all the users
+    users = cursor.fetchall()
+    #connect.close()
+    return jsonify(users)
 
 
 
