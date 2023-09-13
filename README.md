@@ -44,3 +44,7 @@ Links: https://rest-api-aeyz.onrender.com/api
 
 * UML and ER Diagrams.
 - https://lucid.app/lucidchart/b91e23a5-402d-42b2-a14f-a02f3bb02588/edit?viewport_loc=-303%2C-2475%2C3840%2C1827%2C0_0&invitationId=inv_cf08654d-cd65-4852-9b16-df2646f34d0b
+
+
+Testing:
+Done with postman software tool.
