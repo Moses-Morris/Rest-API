@@ -100,7 +100,16 @@ def delete_user(user_id):
         return 'Delete failed'
     
 
-
+#view all users
+@app.route('/api/users', methods=['GET'])
+def all_users():
+    
+    #select all users
+    cursor.execute('SELECT * FROM apiusersinfo')
+    #fetch all the users
+    users = cursor.fetchall()
+    #connect.close()
+    return jsonify(users)
 
 
 #Do not close the connection!!!
