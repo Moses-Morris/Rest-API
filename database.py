@@ -9,8 +9,8 @@ else:
 
 #Create a table named users
 
-createTBL = connect.execute('CREATE TABLE apiusersinfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT  NOT NULL);')
-if createTBL:    
-    print("Table Created Successfully!")
-else:
-   print("Table Creation Failed!!!")
+#createTBL = connect.execute('CREATE TABLE apiusersinfo (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT  NOT NULL);')
+#if createTBL:    
+    #print("Table Created Successfully!")
+#else:
+   #print("Table Creation Failed!!!")
