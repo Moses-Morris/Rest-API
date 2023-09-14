@@ -38,7 +38,16 @@ def add_user():
         #password = data.get('password', None)
 
         if name == "" :   
-            return 'Cannot add user with empty fields'
+            return jsonify({'message': 'Name cannot be empty'}), 400
+        
+        if type(name) != str:
+            return jsonify({'message':'Cannot add user with non-string fields'}), 400
+        
+        #check if user exist in Database
+        cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (name,))
+        user = cursor.fetchone()
+        if user:
+            return jsonify({'message': 'User already exists'}), 400
 
         #cursor = connect.cursor()
         #insert a new user
@@ -51,9 +60,14 @@ def add_user():
                 connect.commit()
                 #close the connection
                 #connect.close()
-                return 'Success : User added successfully'
+                #get_user = cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (name,))
+                #return jsonify(get_user), 201
+                cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (name,))
+                user = cursor.fetchone()
+                #return jsonify({'message': 'User added successfully'}), 201
+                return jsonify({'Person': {'id': user[0], 'name': user[1]}}), 201
             else:
-                return 'User add failed'
+                return jsonify({'message': 'User already exists'}), 400
         except Exception as e:
             return ("Error:", e)
     
@@ -70,19 +84,38 @@ def get_user(user_id):
     if user:
         return jsonify(user)
     else:
-        return 'User not found'
+        return jsonify({'message': 'User not found!'}), 404
     
 
 #create a route to |Update a user and their information
-@app.route('/api/<user_id>', methods=['PATCH','PUT'])
+@app.route('/api/<user_id>', methods=['PUT'])
 def update_user(user_id):
-    name= "Piece of Crap"
-    State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ? OR id =?', (name, user_id, user_id))
-    if State:
-        connect.commit()  
-        return 'Update success'
+    #name= "Piece of Crap"
+    data = request.get_json()
+    name = data['name']
+
+
+    if 'name' not in data:
+        return jsonify({'message': 'Name is required'}), 400
+    
+    if isinstance(data['name'], str) == False:
+        return jsonify({'message':'Cannot add user with non-string fields'}), 400
+
+    #check if user exist
+    CheckUser=cursor.execute('SELECT * FROM apiusersinfo  WHERE name = ? OR id =?', (user_id, user_id))
+
+    if CheckUser:
+        State=cursor.execute('UPDATE apiusersinfo SET name = ? WHERE name = ? OR id =?', (name, user_id, user_id))
+        if State:
+            connect.commit()  
+            cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?', (name,))
+            user = cursor.fetchone()
+            #return jsonify({'message': 'User added successfully'}), 201
+            return jsonify({'Person': {'id': user[0], 'name': user[1]}}), 202
+        else:
+            return jsonify({'message': 'Update failed!'}), 400
     else:
-        return 'Update failed'
+        return jsonify({'message': 'User not found!'}), 404
     
 
 
@@ -94,9 +127,10 @@ def delete_user(user_id):
     State=cursor.execute('DELETE  FROM apiusersinfo WHERE name = ? OR id = ?', (user_id,user_id))
     if State:
         connect.commit()
-        return 'Delete success'
+        return jsonify('Delete success'), 204    #Dont Send a response to the user just return a status code
+        #return jsonify('Delete success'), 200   //Send a response to the user
     else:
-        return 'Delete failed'
+        return jsonify({'message': 'Delete failed!!'}), 400
     
 
 #view all users
@@ -108,7 +142,7 @@ def all_users():
     #fetch all the users
     users = cursor.fetchall()
     #connect.close()
-    return jsonify(users)
+    return jsonify(users), 200
 
 
 #Do not close the connection!!!
