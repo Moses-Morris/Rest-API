@@ -24,8 +24,7 @@ json
 {
     1,
     "Mark Essien",
-    "branch@gmail.com123",
-    "qwertyuiop"
+    
 }
 
 <br>
@@ -38,8 +37,7 @@ json
 {
     6,
     "Mark Essien",
-    "branch@gmail.com123",
-    "qwertyuiop"
+    
 }
 
 <br>
@@ -51,9 +49,8 @@ json
 json
 {
     6,
-    "Update value Field",
-    "branch@gmail.com123",
-    "qwertyuiop"
+    "Updated value Field",
+    
 }
 
 <br>
@@ -81,8 +78,7 @@ json
 {
     //Id Generation is automatic
     "Mark Essien",
-    "branch@gmail.com123",
-    "qwertyuiop"
+    
 }
 
 <br>
@@ -98,8 +94,6 @@ json
 {
     6,
     "Mark Essien",
-    "branch@gmail.com123",
-    "qwertyuiop"
 }
 
 

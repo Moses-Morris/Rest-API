@@ -32,7 +32,7 @@ Endpoints:
 Links: https://rest-api-aeyz.onrender.com/api
 
 
-- A POST requests to https://rest-api-aeyz.onrender.com/api or https://rest-api-aeyz.onrender.com/api add information to the endpoint. The endpoint /api receives data from  https://rest-api-aeyz.onrender.com/api as a POST request.
+- A POST requests to https://rest-api-aeyz.onrender.com/api or https://rest-api-aeyz.onrender.com/api add information to the endpoint. The endpoint /api receives data from  https://rest-api-aeyz.onrender.com/api as a POST request. The format is in raw format
 - A GET requests to https://rest-api-aeyz.onrender.com/api/<user_id> Return a json object containing the details of thr user.
 - A DELETE request to https://rest-api-aeyz.onrender.com/api/<user_id> Returns a msg "Delete Successful"
 - A PATCH or PUT request to https://rest-api-aeyz.onrender.com/api/<user_id> Returns a json object containing the details of the user when modified and Updated.

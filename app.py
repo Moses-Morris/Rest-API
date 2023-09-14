@@ -42,6 +42,7 @@ def add_user():
 
         #cursor = connect.cursor()
         #insert a new user
+        
         try:
             execute = cursor.execute('INSERT INTO apiusersinfo (name) VALUES (?)', (name,))
             # Commit the transaction if needed
