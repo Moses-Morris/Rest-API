@@ -28,9 +28,9 @@ def add_user():
         return jsonify({'message': 'This is a GET request'})
 
     elif request.method == 'POST':
-        name = data['name']
-        email = data['email']
-        password = data['password']
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
 
         if name == "" or email == "" or password == "":
                 return 'Cannot add user with empty fields'
