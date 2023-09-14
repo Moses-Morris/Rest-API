@@ -28,10 +28,6 @@ def add_user():
         return jsonify({'message': 'This is a GET request'})
 
     elif request.method == 'POST':
-        data = request.get_json()
-        if not validate_data(data):
-            return jsonify({'message': 'Invalid input data'}), 400
-
         name = data['name']
         email = data['email']
         password = data['password']
