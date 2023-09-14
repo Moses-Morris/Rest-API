@@ -55,7 +55,7 @@ def add_user():
         except Exception as e:
             return ("Error:", e)
     else:
-        return 'Invalid request method'
+        return ''
     
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
