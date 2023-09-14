@@ -28,21 +28,20 @@ def add_user():
         return " "# jsonify({'message': 'This is a GET request'})
 
     elif request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
+        data = request.get_json()
+        if 'name' not in data:
+            return jsonify({'message': 'Name is required'}), 400
 
-        if name == "" or email == "" or password == "":
-                return 'Cannot add user with empty fields'
-        if len(password) < 8:
-            return 'Password must be at least 8 characters'
-        if type(name) != str or type(email) != str:
-            return 'Invalid data type Values must be strings'
+        name = data.get('name')
+        #password = data.get('password', None)
+
+        if name == "" :   #or email == "" or password == "":
+            return 'Cannot add user with empty fields'
 
         #cursor = connect.cursor()
         #insert a new user
         try:
-            execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
+            execute = cursor.execute('INSERT INTO apiusersinfo (name) VALUES (?)', (name,))
             # Commit the transaction if needed
             # connection.commit()
             if execute:
@@ -63,7 +62,7 @@ def get_user(user_id):
     #create a cursor to execute SQL commands
     #cursor = connect.cursor()
     #select all users
-    cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?   OR  id = ? OR email = ?', (user_id, user_id, user_id))
+    cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?   OR  id = ? ', (user_id, user_id))
     #fetch all the users
     user = cursor.fetchall()
     if user:
