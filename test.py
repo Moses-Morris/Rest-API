@@ -107,3 +107,48 @@ def all_users():
 #connect.close()
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+
+
+    #create a cursor to execute SQL commands
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+        if name == "" or email == "" or password == "":
+            return 'Cannot add user with empty fields'
+        if len(password) < 8:
+            return 'Password must be at least 8 characters'
+        if type(name) != str or type(email) != str:
+            return 'Invalid data type Values must be strings'
+
+        #cursor = connect.cursor()
+        #insert a new user
+        try:
+            execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
+            # Commit the transaction if needed
+            # connection.commit()
+            if execute:
+                connect.commit()
+                #close the connection
+                #connect.close()
+                return 'Success : User added successfully'
+            else:
+                return 'User add failed'
+        except Exception as e:
+            return ("Error:", e)
+    #elif request.method == 'GET':
+        #return render_template('form.html')
+        #create a cursor to execute SQL commands
+        #cursor = connect.cursor()
+        #select all users
+        #cursor.execute('SELECT * FROM apiusersinfo')
+        #fetch all the users
+        #users = cursor.fetchall()
+        #if users:
+           # return jsonify(users)
+        #else:
+           # return 'No users found'
+    #else:
+     #   return 'Invalid request method'

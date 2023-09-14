@@ -9,57 +9,47 @@ def hello_world():
     return 'Hello, World!'
 
 
-#Create a form to add new users
-@app.route('/api/form', methods=['GET', 'POST'])
-def form():
-    return render_template('form.html')
-
+def validate_data(data):
+    # Validate that fields are only strings
+    if not all(isinstance(data[field], str) for field in ['name', 'address', 'email']):
+        return False
+    # Additional validation can be added here
+    return True
 
 #create a route to add new users
 @app.route('/api', methods=['POST'])
 def add_user():
-    #create a cursor to execute SQL commands
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-        if name == "" or email == "" or password == "":
+    data = request.get_json()
+    if not validate_data(data):
+        return jsonify({'message': 'Invalid input data'}), 400
+
+    name = data['name']
+    email = data['email']
+    password = data['password']
+
+    if name == "" or email == "" or password == "":
             return 'Cannot add user with empty fields'
-        if len(password) < 8:
-            return 'Password must be at least 8 characters'
-        if type(name) != str or type(email) != str:
-            return 'Invalid data type Values must be strings'
+    if len(password) < 8:
+        return 'Password must be at least 8 characters'
+    if type(name) != str or type(email) != str:
+        return 'Invalid data type Values must be strings'
 
-        #cursor = connect.cursor()
-        #insert a new user
-        try:
-            execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
-            # Commit the transaction if needed
-            # connection.commit()
-            if execute:
-                connect.commit()
-                #close the connection
-                #connect.close()
-                return 'Success : User added successfully'
-            else:
-                return 'User add failed'
-        except Exception as e:
-            return ("Error:", e)
-    #elif request.method == 'GET':
-        #return render_template('form.html')
-        #create a cursor to execute SQL commands
-        #cursor = connect.cursor()
-        #select all users
-        #cursor.execute('SELECT * FROM apiusersinfo')
-        #fetch all the users
-        #users = cursor.fetchall()
-        #if users:
-           # return jsonify(users)
-        #else:
-           # return 'No users found'
-    #else:
-     #   return 'Invalid request method'
-
+    #cursor = connect.cursor()
+    #insert a new user
+    try:
+        execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
+        # Commit the transaction if needed
+        # connection.commit()
+        if execute:
+            connect.commit()
+            #close the connection
+            #connect.close()
+            return 'Success : User added successfully'
+        else:
+            return 'User add failed'
+    except Exception as e:
+        return ("Error:", e)
+    
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
 def get_user(user_id):
