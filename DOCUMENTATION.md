@@ -1,4 +1,5 @@
-API Documentation
+API Documentation.
+
 This document provides detailed information on how to use the User API, which allows you to perform CRUD operations on a "user" resource.
 <br>
 <hr>

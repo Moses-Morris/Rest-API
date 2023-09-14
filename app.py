@@ -46,7 +46,7 @@ def add_user():
         except Exception as e:
             return ("Error:", e)
     elif request.method == 'GET':
-        return render_template('form.html')
+        #return render_template('form.html')
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
         #select all users
