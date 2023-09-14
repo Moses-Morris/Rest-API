@@ -16,7 +16,7 @@ def form():
 
 
 #create a route to add new users
-@app.route('/api', methods=['GET', 'POST'])
+@app.route('/api', methods=['POST'])
 def add_user():
     #create a cursor to execute SQL commands
     if request.method == 'POST':
@@ -45,7 +45,7 @@ def add_user():
                 return 'User add failed'
         except Exception as e:
             return ("Error:", e)
-    elif request.method == 'GET':
+    #elif request.method == 'GET':
         #return render_template('form.html')
         #create a cursor to execute SQL commands
         #cursor = connect.cursor()
@@ -57,8 +57,8 @@ def add_user():
            # return jsonify(users)
         #else:
            # return 'No users found'
-    else:
-        return 'Invalid request method'
+    #else:
+     #   return 'Invalid request method'
 
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
