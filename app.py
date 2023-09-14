@@ -3,6 +3,8 @@ from database import connect
 import sqlite3
 app = Flask(__name__)
 cursor = connect.cursor()
+
+
 #Create a route to display Hello World
 @app.route('/')
 def hello_world():
@@ -22,14 +24,13 @@ def validate_data(data):
     return True
 
 #create a route to add new users
-@app.route('/api', methods=['GET','POST'])
+@app.route('/api', methods=['POST'])
 def add_user():
-    if request.method == 'GET':
-        return " "# jsonify({'message': 'This is a GET request'})
-
-    elif request.method == 'POST':
         data = request.get_json()
         # Validate that the request contains JSON
+        if not data:
+            return jsonify({'message': 'No JSON data provided'}), 400
+
         if 'name' not in data:
             return jsonify({'message': 'Name is required'}), 400
 
@@ -54,8 +55,6 @@ def add_user():
                 return 'User add failed'
         except Exception as e:
             return ("Error:", e)
-    else:
-        return 'Invalid request method'
     
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
@@ -63,6 +62,7 @@ def get_user(user_id):
     #create a cursor to execute SQL commands
     #cursor = connect.cursor()
     #select all users
+    
     cursor.execute('SELECT * FROM apiusersinfo WHERE name = ?   OR  id = ? ', (user_id, user_id))
     #fetch all the users
     user = cursor.fetchall()
