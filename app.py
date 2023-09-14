@@ -25,7 +25,7 @@ def validate_data(data):
 @app.route('/api', methods=['GET','POST'])
 def add_user():
     if request.method == 'GET':
-        return jsonify({'message': 'This is a GET request'})
+        return " "# jsonify({'message': 'This is a GET request'})
 
     elif request.method == 'POST':
         name = request.form['name']
@@ -55,7 +55,7 @@ def add_user():
         except Exception as e:
             return ("Error:", e)
     else:
-        return ''
+        return 'Invalid request method'
     
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
