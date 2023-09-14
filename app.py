@@ -17,38 +17,41 @@ def validate_data(data):
     return True
 
 #create a route to add new users
-@app.route('/api', methods=['POST'])
+@app.route('/api', methods=['GET','POST'])
 def add_user():
-    data = request.get_json()
-    if not validate_data(data):
-        return jsonify({'message': 'Invalid input data'}), 400
+    if request.method == 'GET':
+        return jsonify({'message': 'This is a GET request'})
+    else:
+        data = request.get_json()
+        if not validate_data(data):
+            return jsonify({'message': 'Invalid input data'}), 400
 
-    name = data['name']
-    email = data['email']
-    password = data['password']
+        name = data['name']
+        email = data['email']
+        password = data['password']
 
-    if name == "" or email == "" or password == "":
-            return 'Cannot add user with empty fields'
-    if len(password) < 8:
-        return 'Password must be at least 8 characters'
-    if type(name) != str or type(email) != str:
-        return 'Invalid data type Values must be strings'
+        if name == "" or email == "" or password == "":
+                return 'Cannot add user with empty fields'
+        if len(password) < 8:
+            return 'Password must be at least 8 characters'
+        if type(name) != str or type(email) != str:
+            return 'Invalid data type Values must be strings'
 
-    #cursor = connect.cursor()
-    #insert a new user
-    try:
-        execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
-        # Commit the transaction if needed
-        # connection.commit()
-        if execute:
-            connect.commit()
-            #close the connection
-            #connect.close()
-            return 'Success : User added successfully'
-        else:
-            return 'User add failed'
-    except Exception as e:
-        return ("Error:", e)
+        #cursor = connect.cursor()
+        #insert a new user
+        try:
+            execute = cursor.execute('INSERT INTO apiusersinfo (name, email, password) VALUES (?, ?, ?)', (name, email, password))
+            # Commit the transaction if needed
+            # connection.commit()
+            if execute:
+                connect.commit()
+                #close the connection
+                #connect.close()
+                return 'Success : User added successfully'
+            else:
+                return 'User add failed'
+        except Exception as e:
+            return ("Error:", e)
     
 #create a route to view a user and their information
 @app.route('/api/<user_id>', methods=['GET'])
