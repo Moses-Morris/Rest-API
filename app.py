@@ -8,6 +8,11 @@ cursor = connect.cursor()
 def hello_world():
     return 'Hello, World!'
 
+#Create a form to add new users
+@app.route('/api/form', methods=['GET', 'POST'])
+def form():
+    return render_template('form.html')
+
 
 def validate_data(data):
     # Validate that fields are only strings
@@ -21,6 +26,7 @@ def validate_data(data):
 def add_user():
     if request.method == 'GET':
         return jsonify({'message': 'This is a GET request'})
+
     elif request.method == 'POST':
         data = request.get_json()
         if not validate_data(data):
