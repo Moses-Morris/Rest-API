@@ -29,13 +29,14 @@ def add_user():
 
     elif request.method == 'POST':
         data = request.get_json()
+        # Validate that the request contains JSON
         if 'name' not in data:
             return jsonify({'message': 'Name is required'}), 400
 
         name = data.get('name')
         #password = data.get('password', None)
 
-        if name == "" :   #or email == "" or password == "":
+        if name == "" :   
             return 'Cannot add user with empty fields'
 
         #cursor = connect.cursor()
